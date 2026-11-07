@@ -2,7 +2,7 @@
 
 Compare four manually implemented algorithms: basic vertex cover, randomized vertex cover, greedy graph coloring, and largest degree first coloring. The benchmark measures runtime and solution size on sampled subgraphs.
 
-- Dataset download: **[ADD DATASET LINK HERE]**
+- Download the dataset from [here](https://drive.google.com/drive/folders/10s-_qutMS6hMNjHOo81g_OwFv4a1wGLp?usp=sharing)
 
 ## 1. Get the project and install dependencies
 
