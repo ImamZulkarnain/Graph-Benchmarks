@@ -30,7 +30,7 @@ Tests use small temporary graphs and do not need a dataset download:
 python -m unittest discover -s tests -v
 ```
 
-A successful run ends with `OK`. The suite contains 34 tests covering algorithms, loading, sampling, benchmark validation, plotting, and command routing.
+A successful run ends with `OK`. The suite contains 38 tests covering algorithms, loading, sampling, benchmark validation, plotting, and command routing.
 
 ## 3. Run a small experiment
 
@@ -68,13 +68,13 @@ Run preparation, benchmarking, and plotting together:
 python main.py
 ```
 
-This produces 26 graphs and 3,120 measurements. Each benchmark creates a new `results/benchmark_<timestamp>/` folder.
+This produces 26 graphs and 3,120 measurements. Each benchmark creates a new `results/frb30-15-5/benchmark_<timestamp>/` folder.
 
 To benchmark the included prepared graphs without regenerating them:
 
 ```bash
 python main.py benchmark
-python main.py plot results/benchmark_<timestamp>
+python main.py plot results/frb30-15-5/benchmark_<timestamp>
 ```
 
 Replace `<timestamp>` with the actual folder name printed by the benchmark.
@@ -85,7 +85,7 @@ To regenerate the prepared graphs and properties tables only:
 python main.py prepare
 ```
 
-Graph files and the manifest are saved in `data/prepared/`. Properties tables go to `results/dataset_properties/`. Benchmark runs contain raw measurements, metadata, four comparison plots, and a full-graph results table.
+Graph files and the manifest are saved in `data/prepared/<dataset_name>/`. Properties tables go to `results/dataset_properties/<dataset_name>/`. Benchmark runs contain raw measurements, metadata, four comparison plots, and a full-graph results table.
 
 ### Reproducibility
 
@@ -104,9 +104,9 @@ Plot lines show medians of per-graph trial medians. Bands show the range between
 | `src/` | Algorithms, loading, preparation, benchmarking, and plotting |
 | `tests/` | Unit tests and small workflow checks |
 | `data/raw/` | Original downloaded dataset |
-| `data/prepared/` | Prepared subgraphs and manifest, included in Git |
-| `results/dataset_properties/` | Generated graph properties and summary tables |
-| `results/benchmark_<timestamp>/` | Measurements, metadata, plots, and summaries for one run |
+| `data/prepared/<dataset_name>/` | Prepared subgraphs and manifest, included in Git |
+| `results/dataset_properties/<dataset_name>/` | Generated graph properties and summary tables |
+| `results/frb30-15-5/benchmark_<timestamp>/` | Measurements, metadata, plots, and summaries for one run |
 | `docs/` | Assignment and benchmark documentation |
 | `docs/archive/` | Old delivery ZIPs, excluded from Git |
 | `tmp/` | Temporary checks and quick-run data, excluded from Git |
@@ -114,3 +114,36 @@ Plot lines show medians of per-graph trial medians. Bands show the range between
 In a fresh clone, `results/` contains only an explanation file because generated results are ignored. Its output subfolders are created when their commands run. `tmp/` and `docs/archive/` are absent unless created locally; they are not required for the full workflow. Git does not store empty folders.
 
 The `.gitignore` excludes generated results, temporary files, Python caches, local environments, editor settings, and local secrets. Raw and prepared datasets remain eligible for tracking. Selected results used in the report can be copied to a separate `report_results/` folder for inclusion in Git.
+
+## Using a different dataset
+
+Place the new Matrix Market file under `data/raw/`. The loader expects an
+undirected, unweighted file with the header `%%MatrixMarket matrix coordinate pattern symmetric`.
+For example, for a graph with 1,000 vertices:
+
+```bash
+python main.py all --dataset data/raw/new_graph/new_graph.mtx --sizes 50 100 250 500 1000
+```
+
+The dataset filename determines the folder name automatically:
+
+- `data/prepared/new_graph/`: subgraphs and manifest.
+- `results/dataset_properties/new_graph/`: properties tables.
+- `results/new_graph/benchmark_<timestamp>/`: measurements, metadata, and plots.
+
+Choose sizes no larger than the source graph. Include its full vertex count
+if you want the full-graph summary table. Defaults remain the six sizes for
+`frb30-15-5`; new datasets should supply appropriate `--sizes`.
+
+To benchmark an already-prepared dataset, without loading the raw file:
+
+```bash
+python main.py benchmark --dataset-name new_graph
+```
+
+Use `--dataset-name` to give datasets with identical filenames distinct labels.
+Use the same label for preparation and benchmarking. Reusing a label during
+preparation replaces matching prepared files and properties for that label;
+benchmark runs always get a new timestamped directory. Explicit `--preparation`,
+`--properties`, and `--output` paths still override the default locations.
+Existing benchmark run folders remain readable by the plotting command.

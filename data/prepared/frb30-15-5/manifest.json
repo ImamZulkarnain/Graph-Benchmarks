@@ -1,5 +1,5 @@
 {
-  "dataset": "../raw/frb30-15-5/frb30-15-5.mtx",
+  "dataset": "../../raw/frb30-15-5/frb30-15-5.mtx",
   "dataset_path_base": "manifest directory",
   "dataset_sha256": "01cd5baf2349300eb856271a00e12f573131844b79d0cab33cf68d97c4413d53",
   "sizes": [
@@ -41,5 +41,6 @@
     "subgraphs/n350_sample4.json",
     "subgraphs/n350_sample5.json",
     "subgraphs/n450_full.json"
-  ]
+  ],
+  "dataset_name": "frb30-15-5"
 }

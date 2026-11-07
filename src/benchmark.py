@@ -1,4 +1,4 @@
-"""Run repeated benchmarks on the graphs listed in data/prepared/manifest.json."""
+"""Run repeated benchmarks on the graphs listed in data/prepared/frb30-15-5/manifest.json."""
 
 import csv
 import hashlib

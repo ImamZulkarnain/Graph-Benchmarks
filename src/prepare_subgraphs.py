@@ -30,7 +30,7 @@ def save_csv(path, rows):
         writer.writerows(rows)
 
 
-def prepare_subgraphs(dataset, output, sizes, properties_output, samples=5, base_seed=520):
+def prepare_subgraphs(dataset, output, sizes, properties_output, samples=5, base_seed=520, dataset_name=None):
     """Save induced subgraphs, per-sample properties, and a size summary."""
     vertices, edges = load_graph(dataset)
     sizes = sorted(set(sizes))
@@ -89,6 +89,7 @@ def prepare_subgraphs(dataset, output, sizes, properties_output, samples=5, base
     save_csv(properties_output / "subgraph_properties.csv", properties)
     save_csv(properties_output / "subgraph_summary.csv", summary)
     metadata = {
+        "dataset_name": dataset_name or Path(dataset).stem,
         "dataset": Path(os.path.relpath(Path(dataset).resolve(), output.resolve())).as_posix(),
         "dataset_path_base": "manifest directory",
         "dataset_sha256": hashlib.sha256(Path(dataset).read_bytes()).hexdigest(),
