@@ -18,12 +18,12 @@ def main():
     for command in ["all", "prepare", "benchmark"]:
         options = commands.add_parser(command)
         options.add_argument("--seed", type=int, default=520)
-        options.add_argument("--dataset", type=Path, default=root / "data/raw/frb30-15-5/frb30-15-5.mtx")
+        options.add_argument("--dataset", type=Path, default=root / "data/raw/frb100-40/frb100-40.mtx")
         options.add_argument("--dataset-name", help="Folder label; defaults to the dataset filename without its extension.")
         options.add_argument("--preparation", type=Path, help="Override the prepared dataset directory.")
         if command in ["all", "prepare"]:
             options.add_argument("--properties", type=Path, help="Override the dataset properties directory.")
-            options.add_argument("--sizes", type=int, nargs="+", default=[50, 100, 150, 250, 350, 450])
+            options.add_argument("--sizes", type=int, nargs="+", default=[500, 1000, 1500, 2000, 3000, 4000])
             options.add_argument("--samples", type=int, default=5)
         if command in ["all", "benchmark"]:
             options.add_argument("--runs", type=int, default=30)

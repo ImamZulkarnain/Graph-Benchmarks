@@ -10,10 +10,9 @@ venv/
 .coverage.*
 htmlcov/
 
-# Generated outputs; keep the explanation visible in a fresh clone
+# Generated outputs and local documentation
 /tmp/
 /results/*
-!/results/README.md
 /docs/
 
 # Editor and operating-system files
