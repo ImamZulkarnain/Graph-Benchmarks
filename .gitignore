@@ -1,0 +1,28 @@
+# Python caches and local environments
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Test outputs
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Generated outputs; keep the explanation visible in a fresh clone
+/tmp/
+/results/*
+!/results/README.md
+/docs/
+
+# Editor and operating-system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Local configuration
+.env
+.env.*
+!.env.example
